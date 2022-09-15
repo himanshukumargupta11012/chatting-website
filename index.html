@@ -8,11 +8,15 @@
 </head>
 <body>
 
-  <input type="text" id="name">
+  <label for="name"></label>NAME:<input type="text" id="name" name="name">
   <br>
-
-<input type="text" id="other_msg">
-  <input  type="text" id="self_msg" value="type something">
+<!-- <label for="output">OUTPUT:</label> -->
+<ul id="output"></ul>
+<br>
+<label for="to">TO:</label>
+<select name="to" id="to"></select>
+<!-- <input type="text" id="to" name="to"> -->
+  <input  type="text" id="self_msg" placeholder="write message">
 </body>
 <script src="client_side.js"></script>
 
