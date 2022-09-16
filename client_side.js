@@ -2,11 +2,11 @@
 
 
 
-var HOST = location.origin.replace(/^http/, 'ws')
-ws = new WebSocket(HOST);
+// var HOST = location.origin.replace(/^http/, 'ws')
+// ws = new WebSocket(HOST);
 
 
-ws = new WebSocket("ws://localhost:5500")
+// ws = new WebSocket("ws://localhost:5500")
 
 user_name = document.getElementById("name");
 
