@@ -1,17 +1,14 @@
 
-user_name = document.getElementById("name");
-// user_name.addEventListener("keypress",nameVerify);
-// var ws=0
 
-// function nameVerify(event){
-//     user_name=document.getElementById("name");
-// if(user_name!=null&&event.key=="Enter")
-ws = new WebSocket("ws://localhost:3000")
-// ws.onopen=()=>{
-//     ws.send({name:user_name.value})
-//     ws.send({name:"dfsjd"})
-// }
-// }
+
+
+var HOST = location.origin.replace(/^http/, 'ws')
+ws = new WebSocket(HOST);
+
+
+ws = new WebSocket("ws://localhost:5500")
+
+user_name = document.getElementById("name");
 
 user_name.addEventListener("keypress", nameVerify);
 

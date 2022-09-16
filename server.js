@@ -1,12 +1,17 @@
 
-const PORT = process.env.PORT || 3000;
-const INDEX = '/index.html';
+// 'use strict';
+
 express=require('express')
+const { Server } = require('ws');
+
+const PORT = process.env.PORT || 5500;
+const INDEX = '/index.html';
+
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-  const { Server } = require('ws');
+
 
   const webServer = new Server({ server });
 
