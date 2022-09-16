@@ -1,19 +1,19 @@
 
 // 'use strict';
 
-express=require('express')
+express = require('express')
 const { Server } = require('ws');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
 const server = express()
-  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+    .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+    .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
 
-  const webServer = new Server({ server });
+const webServer = new Server({ server });
 
 // const webSocketSv = require("ws")
 
@@ -47,39 +47,40 @@ webServer.on("connection", (self) => {
     self.on('message', (messag) => {
         console.log(messag.toString())
         if (isJson(messag.toString())) {
-            let object=JSON.parse(messag.toString())
+            let object = JSON.parse(messag.toString())
             sender = JSON.parse(messag.toString()).name
             if (object.name != null) {
                 client2.push({
                     name: object.name,
                     id: self
                 })
-                
-                all_names={names:[]}
-                client2.forEach((client)=>{
-                    all_names.names.push(client.name)
+
+                all_names = { names: [] }
+                client2.forEach((client) => {
+                    if (client.id.readyState === 1)
+                        all_names.names.push(client.name)
                 })
-                client2.forEach((client)=>{
-                if(client.name!=null)client.id.send(JSON.stringify(all_names))
+                client2.forEach((client) => {
+                    if (client.name != null) client.id.send(JSON.stringify(all_names))
                 })
             }
-            else if (object.receiver != null){
+            else if (object.receiver != null) {
                 let object = JSON.parse(messag.toString())
                 console.log(object)
                 client2.forEach((client) => {
-                    if(client.id==self)
-                     sender=client.name
+                    if (client.id == self)
+                        sender = client.name
                 })
                 client2.forEach((client) => {
-                    
-                    if (client.name ==object.receiver){
-                        client.id.send(sender+ ' : '+object.message)
+
+                    if (client.name == object.receiver) {
+                        client.id.send(sender + ' : ' + object.message)
                     }
-                    else if('all'===object.receiver&&client.id!=self){
-                        client.id.send(sender+ ' : '+object.message)
+                    else if ('all' === object.receiver && client.id != self) {
+                        client.id.send(sender + ' : ' + object.message)
                     }
                 })
-                self.send('you : '+object.message)
+                self.send('you to ' + object.receiver + ' : ' + object.message)
             }
         }
 
@@ -105,6 +106,14 @@ webServer.on("connection", (self) => {
     })
 
     self.on("close", () => {
+        all_names = { names: [] }
+        client2.forEach((client) => {
+            if (client.id.readyState === 1)
+                all_names.names.push(client.name)
+        })
+        client2.forEach((client) => {
+            if (client.name != null) client.id.send(JSON.stringify(all_names))
+        })
         console.log("connection closed")
     })
 })

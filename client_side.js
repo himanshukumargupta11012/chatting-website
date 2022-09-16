@@ -111,13 +111,3 @@ function sendMessage(event) {
 }
 
 
-
-// function sendMessage(event) {
-//     messag = document.getElementById("self_msg")
-//     if (event.key == "Enter") {
-//         event.preventDefault();
-//         // ws.send({kndknd:"dfjfd"})
-//         ws.send(messag.value)
-
-//     }
-// }
